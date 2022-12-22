@@ -1,0 +1,62 @@
+const express = require("express");
+const app = express()
+const db = require("./Mongodb")
+const bcrypt =require('bcrypt')
+app.use(express.json())
+const cors = require('cors');
+app.use(cors())
+
+const admin={email:'Admin',pass:'123'}
+
+db.connect((err) => {
+  if (err) {
+    console.log("connection potti" + err);
+  } else {
+    console.log("db connected");
+  }
+});
+
+app.get("/", (req, res) => {
+    db.get().collection('users').insertOne({helo:"hi"})
+    res.status(300).json({ hello: "hasfhkj" });
+});
+
+app.post('/login',async(req,res)=>{
+  let user =await db.get().collection('users').findOne({email:req.body.email})
+  if(user){
+    bcrypt.compare(req.body.password,user.password).then((status)=>{
+      if(status) {res.status(200).json({login:"sucess"})}
+      else res.status(401).json({error:'Invalid password'})
+    })
+  }else{
+    res.sendStatus(404)
+  }
+})
+
+app.post('/signup',async(req,res)=>{
+  req.body.password= await bcrypt.hash(req.body.password, 10)
+  db.get().collection('users').insertOne(req.body).then(()=>{
+    res.status(200).json()
+  })
+})
+
+app.post('/admin',(req,res)=>{
+    const {email,password} =req.body;
+    if(email==admin.email&&password==admin.pass){
+        res.status(200).json({login:"sucess"})
+    }else{
+        if(email!==admin.email){
+            res.status(401).json({error:'Invalid Email'})
+        }else{
+            res.status(401).json({error:'wrong password'})
+        }
+    }
+})
+
+app.listen(3001, (err) => {
+  if (err) {
+    console.log(err);
+  } else {
+    console.log("server running");
+  }
+});
