@@ -2,8 +2,11 @@ const express = require("express");
 const app = express()
 const db = require("./Mongodb")
 const bcrypt =require('bcrypt')
+require('dotenv').config()
+
 app.use(express.json())
-const cors = require('cors');
+const cors = require('cors')
+var jwt = require('jsonwebtoken');
 app.use(cors())
 
 const admin={email:'Admin',pass:'123'}
@@ -16,7 +19,7 @@ db.connect((err) => {
   }
 });
 
-app.get("/", (req, res) => {
+app.get("/h", authenticateToken,(req, res) => {
     db.get().collection('users').insertOne({helo:"hi"})
     res.status(300).json({ hello: "hasfhkj" });
 });
@@ -25,7 +28,10 @@ app.post('/login',async(req,res)=>{
   let user =await db.get().collection('users').findOne({email:req.body.email})
   if(user){
     bcrypt.compare(req.body.password,user.password).then((status)=>{
-      if(status) {res.status(200).json({login:"sucess"})}
+      if(status) {
+        let accessToken=jwt.sign(user.name,process.env.ACESS_TOKEN_SCERET)
+        res.status(200).json({accessToken:accessToken})
+      }
       else res.status(401).json({error:'Invalid password'})
     })
   }else{
@@ -53,6 +59,15 @@ app.post('/admin',(req,res)=>{
     }
 })
 
+function authenticateToken(req,res,next){
+  const authHeader=req.headers['authorization']
+  const token=authHeader && authHeader.split(' ')[1]
+  if(token==null) return res.sendStatus(401)
+  jwt.verify(token,process.env.ACESS_TOKEN_SCERET,(err,user)=>{
+    if(err) return res.sendStatus(403)
+    next()
+  })
+}
 app.listen(3001, (err) => {
   if (err) {
     console.log(err);
