@@ -3,6 +3,7 @@ import Homepage from "./pages/user/home";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Loginpage from "./pages/user/login";
 import SignupPage from "./pages/user/signup";
+import ProfilePage from "./pages/user/userprofile"
 import AdminLogin from "./pages/admin/adminlogin";
 import Adminpanel from "./pages/admin/adminpanel";
 
@@ -18,6 +19,7 @@ function App() {
         <Route path="/" element={<Homepage />} />
         <Route path="/login" element={<Loginpage />} />
         <Route path="/signup" element={<SignupPage />} />
+        <Route path="/user" element={<ProfilePage />} />
         <Route path="/admin" element={<AdminLogin/>} />
         <Route path="/adminpanel" element={<Adminpanel/>} />
       </Routes>

@@ -37,7 +37,7 @@ export default function Profile() {
                       </div>
                     </div>
                     <div className="d-flex pt-1">
-                      <MDBBtn outline className="me-1 flex-grow-1">Chat</MDBBtn>
+                      <MDBBtn outline className="me-1 flex-grow-1">Go Back</MDBBtn>
                       <MDBBtn className="flex-grow-1">Follow</MDBBtn>
                     </div>
                   </div>
