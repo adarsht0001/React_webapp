@@ -18,7 +18,7 @@ function Head() {
             navbarScroll
           >
             <Nav.Link href="#action1">Home</Nav.Link>
-            <Nav.Link href="#action2">Profile</Nav.Link>
+            <Nav.Link href="/user">Profile</Nav.Link>
           </Nav>
           <Form className="d-flex">
             <Form.Control

@@ -13,15 +13,16 @@ const admin={email:'Admin',pass:'123'}
 
 db.connect((err) => {
   if (err) {
-    console.log("connection potti" + err);
+    console.log("connection failed" + err);
   } else {
     console.log("db connected");
   }
 });
 
-app.get("/h", authenticateToken,(req, res) => {
-    db.get().collection('users').insertOne({helo:"hi"})
-    res.status(300).json({ hello: "hasfhkj" });
+app.get("/user", authenticateToken,(req, res) => {
+    // db.get().collection('users').insertOne({helo:"hi"})/
+    // res.status(300).json({ hello: "hasfhkj" });
+    res.status(200)
 });
 
 app.post('/login',async(req,res)=>{

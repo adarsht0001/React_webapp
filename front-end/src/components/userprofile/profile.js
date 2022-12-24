@@ -1,7 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { MDBCol, MDBContainer, MDBRow, MDBCard, MDBCardTitle, MDBCardText, MDBCardBody, MDBCardImage, MDBBtn } from 'mdb-react-ui-kit';
-
+import axios from "../../axios/axios";
 export default function Profile() {
+    useEffect(()=>{
+        axios.get('/user').then(()=>{
+            alert()
+        }).catch((err)=>{
+            console.log(err);
+        })
+    },[])
   return (
     <div className="vh-100" style={{ backgroundColor: '#9de2ff' }}>
       <MDBContainer>
@@ -20,22 +27,6 @@ export default function Profile() {
                   <div className="flex-grow-1 ms-3">
                     <MDBCardTitle>Danny McLoan</MDBCardTitle>
                     <MDBCardText>Senior Journalist</MDBCardText>
-
-                    <div className="d-flex justify-content-start rounded-3 p-2 mb-2"
-                      style={{ backgroundColor: '#efefef' }}>
-                      <div>
-                        <p className="small text-muted mb-1">Articles</p>
-                        <p className="mb-0">41</p>
-                      </div>
-                      <div className="px-3">
-                        <p className="small text-muted mb-1">Followers</p>
-                        <p className="mb-0">976</p>
-                      </div>
-                      <div>
-                        <p className="small text-muted mb-1">Rating</p>
-                        <p className="mb-0">8.5</p>
-                      </div>
-                    </div>
                     <div className="d-flex pt-1">
                       <MDBBtn outline className="me-1 flex-grow-1">Go Back</MDBBtn>
                       <MDBBtn className="flex-grow-1">Follow</MDBBtn>
