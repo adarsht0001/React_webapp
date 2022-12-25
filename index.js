@@ -41,6 +41,7 @@ app.post('/login',async(req,res)=>{
 })
 
 app.post('/signup',async(req,res)=>{
+  console.log('data');
   req.body.password= await bcrypt.hash(req.body.password, 10)
   db.get().collection('users').insertOne(req.body).then(()=>{
     res.status(200).json()
