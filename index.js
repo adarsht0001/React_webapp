@@ -19,7 +19,12 @@ db.connect((err) => {
   }
 });
 
-app.get("/user", authenticateToken,(req, res) => {
+app.get("/user",authenticateToken,(req, res) => {
+  const authHeader=req.headers['authorization']
+  console.log(authHeader);
+  const token=authHeader && authHeader.split(' ')[0]
+  console.log(token);
+  console.log('skdlj');
     // db.get().collection('users').insertOne({helo:"hi"})/
     // res.status(300).json({ hello: "hasfhkj" });
     res.status(200)
@@ -41,7 +46,6 @@ app.post('/login',async(req,res)=>{
 })
 
 app.post('/signup',async(req,res)=>{
-  console.log('data');
   req.body.password= await bcrypt.hash(req.body.password, 10)
   db.get().collection('users').insertOne(req.body).then(()=>{
     res.status(200).json()
@@ -63,7 +67,7 @@ app.post('/admin',(req,res)=>{
 
 function authenticateToken(req,res,next){
   const authHeader=req.headers['authorization']
-  const token=authHeader && authHeader.split(' ')[1]
+  const token=authHeader && authHeader.split(' ')[0]
   if(token==null) return res.sendStatus(401)
   jwt.verify(token,process.env.ACESS_TOKEN_SCERET,(err,user)=>{
     if(err) return res.sendStatus(403)

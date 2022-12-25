@@ -28,6 +28,8 @@ function Login(props) {
         password
       }
       axios.post('/login',data).then((response)=>{
+        console.log(response);
+        sessionStorage.setItem('jwt', response.data.accessToken)
         navigate('/')
       }).catch((err)=>setError(err.response.data.error))
     }
@@ -73,7 +75,7 @@ function Login(props) {
               <div>
                 {props.Admin?'':<p className="mb-0">
                   Don't have an account?{" "}
-                  <a href="/signup" class="text-white-50 fw-bold">
+                  <a href="/signup" className="text-white-50 fw-bold">
                     Sign Up
                   </a>
                 </p>}

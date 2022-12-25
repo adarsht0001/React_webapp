@@ -1,11 +1,15 @@
 import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'
 import { MDBCol, MDBContainer, MDBRow, MDBCard, MDBCardTitle, MDBCardText, MDBCardBody, MDBCardImage, MDBBtn } from 'mdb-react-ui-kit';
 import axios from "../../axios/axios";
 export default function Profile() {
+  const navigate=useNavigate()
     useEffect(()=>{
-        axios.get('/user').then(()=>{
+        axios.get('/user',{ headers: { 
+          Authorization:sessionStorage.getItem('jwt') } }).then(()=>{
             alert()
         }).catch((err)=>{
+          navigate('/')
             console.log(err);
         })
     },[])
