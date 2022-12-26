@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Button from "react-bootstrap/Button";
 import {
   MDBContainer,
@@ -20,7 +20,6 @@ function Signup() {
     formState: { errors },
   } = useForm();
   const submitForm = (data) => {
-    console.log(data);
     axios.post("/signup", data).then(() => {
       navigate('/login')
     });

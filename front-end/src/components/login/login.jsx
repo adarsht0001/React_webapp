@@ -17,6 +17,7 @@ function Login(props) {
         password
       }
     axios.post('/admin',data).then((res)=>{
+      navigate('/adminpanel')
         alert('login Succesfull')
     }).catch((err)=>{
       setError(err.response.data.error)

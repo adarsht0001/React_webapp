@@ -23,8 +23,6 @@ app.get("/user",authenticateToken,(req, res) => {
   const authHeader=req.headers['authorization']
   console.log(authHeader);
   const token=authHeader && authHeader.split(' ')[0]
-  console.log(token);
-  console.log('skdlj');
     // db.get().collection('users').insertOne({helo:"hi"})/
     // res.status(300).json({ hello: "hasfhkj" });
     res.status(200)
@@ -64,6 +62,12 @@ app.post('/admin',(req,res)=>{
         }
     }
 })
+
+app.get('/userlist',async(req,res)=>{
+  let users=await db.get().collection('users').find().toArray()
+  res.json({result:users})
+})
+
 
 function authenticateToken(req,res,next){
   const authHeader=req.headers['authorization']

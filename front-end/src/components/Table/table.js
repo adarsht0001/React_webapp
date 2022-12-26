@@ -1,7 +1,14 @@
+import { useEffect, useState } from "react";
 import Container from "react-bootstrap/esm/Container";
 import Table from "react-bootstrap/Table";
-
+import axios from "../../axios/axios";
 function UserTable() {
+  const [user,setUser]=useState([])
+  useEffect(()=>{
+    axios.get('/userlist').then((response)=>{
+      setUser(response.data.result)
+    })
+  },[])
   return (
     <Container className="p-5">
       <Table striped bordered hover>
@@ -9,23 +16,21 @@ function UserTable() {
           <tr>
             <th>#</th>
             <th>Username</th>
-            <th>password</th>
-            <th>Mail</th>
+            <th>mail</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
+          {user.map((e,i) => {
+            return(
+          <tr key={i}>
+            <td>{i+1}</td>
+            <td>{e.name}</td>
+            <td>{e.email}</td>
+            <td></td>
           </tr>
-          <tr>
-            <td>2</td>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-          </tr>
+            )
+          })}
         </tbody>
       </Table>
     </Container>
