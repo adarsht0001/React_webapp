@@ -29,7 +29,6 @@ function Login(props) {
         password
       }
       axios.post('/login',data).then((response)=>{
-        console.log(response);
         sessionStorage.setItem('jwt', response.data.accessToken)
         navigate('/')
       }).catch((err)=>setError(err.response.data.error))
