@@ -20,11 +20,6 @@ db.connect((err) => {
 });
 
 app.get("/user",authenticateToken,(req, res) => {
-  const authHeader=req.headers['authorization']
-  console.log(authHeader);
-  const token=authHeader && authHeader.split(' ')[0]
-    // db.get().collection('users').insertOne({helo:"hi"})/
-    // res.status(300).json({ hello: "hasfhkj" });
     res.status(200)
 });
 
