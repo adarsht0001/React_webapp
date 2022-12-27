@@ -29,7 +29,7 @@ app.post('/login',async(req,res)=>{
     bcrypt.compare(req.body.password,user.password).then((status)=>{
       if(status) {
         let accessToken=jwt.sign(user.name,process.env.ACESS_TOKEN_SCERET)
-        res.status(200).json({accessToken:accessToken})
+        res.status(200).json({accessToken:accessToken,user:user})
       }
       else res.status(401).json({error:'Invalid password'})
     })

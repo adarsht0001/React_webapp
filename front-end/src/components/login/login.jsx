@@ -5,12 +5,15 @@ import "./login.css";
 import { useState } from "react";
 import axios from "../../axios/axios";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { login } from "../../redux/redux";
 
 function Login(props) {
     const [error,setError]=useState(null)
     const [email,setEmail]=useState('')
     const [password,setPassword]=useState('')
     const navigate=useNavigate()
+    const dispatch=useDispatch();
     const admin=()=>{
       const data={
         email,
@@ -30,6 +33,7 @@ function Login(props) {
       }
       axios.post('/login',data).then((response)=>{
         sessionStorage.setItem('jwt', response.data.accessToken)
+        dispatch(login({name:response.data.user.name,email:response.data.user.email,jwt:response.data.accessToken}))
         navigate('/')
       }).catch((err)=>setError(err.response.data.error))
     }
