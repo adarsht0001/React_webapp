@@ -21,12 +21,6 @@ function Head() {
             <Nav.Link href="/user">Profile</Nav.Link>
           </Nav>
           <Form className="d-flex">
-            <Form.Control
-              type="search"
-              placeholder="Search"
-              className="me-2"
-              aria-label="Search"
-            />
             <Button onClick={()=>{
               navigate('/login')
             }} variant="outline-success">Login</Button>
