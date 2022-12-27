@@ -5,15 +5,23 @@ import axios from "../../axios/axios";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom";
+import {MdOutlineDeleteOutline} from 'react-icons/md';
 function UserTable() {
   const navigate=useNavigate()
+  const [remove,setremoved]=useState('')
+  const removeUser=(id)=>{
+    axios.delete('/deleteuser',{data:{id:id}}).then((res)=>{
+      alert()
+      setremoved(res)
+    })
+  }
   const [user, setUser] = useState([]);
   const [search,setSearch]=useState('')
   useEffect(() => {
     axios.get("/userlist").then((response) => {
       setUser(response.data.result);
     });
-  }, []);
+  }, [remove]);
   return (
     <Container>
       <Form className="d-flex p-5">
@@ -59,7 +67,7 @@ function UserTable() {
                 <td>{i + 1}</td>
                 <td>{e.name}</td>
                 <td>{e.email}</td>
-                <td></td>
+                <td><MdOutlineDeleteOutline onClick={()=>removeUser(e._id)}/></td>
               </tr>
             );
           })}

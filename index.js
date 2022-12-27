@@ -7,6 +7,7 @@ require('dotenv').config()
 app.use(express.json())
 const cors = require('cors')
 var jwt = require('jsonwebtoken');
+const { ObjectId, ObjectID } = require("mongodb");
 app.use(cors())
 
 const admin={email:'Admin',pass:'123'}
@@ -57,6 +58,12 @@ app.post('/admin',(req,res)=>{
             res.status(401).json({error:'wrong password'})
         }
     }
+})
+
+app.delete('/deleteuser',(req,res)=>{
+  db.get().collection('users').deleteOne({_id:ObjectID(req.body.id)}).then((res)=>{
+    res.sendStatus(200)
+  })
 })
 
 app.get('/userlist',async(req,res)=>{

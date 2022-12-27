@@ -5,7 +5,7 @@ import UserTable from "../../components/Table/table";
 const Adminpanel = () => {
   return (
     <Fragment>
-      <Head />
+      <Head Admin/>
       <UserTable />
     </Fragment>
   );
