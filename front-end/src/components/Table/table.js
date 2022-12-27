@@ -6,12 +6,12 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom";
 import {MdOutlineDeleteOutline} from 'react-icons/md';
+import {GrEdit} from 'react-icons/gr'
 function UserTable() {
   const navigate=useNavigate()
   const [remove,setremoved]=useState('')
   const removeUser=(id)=>{
     axios.delete('/deleteuser',{data:{id:id}}).then((res)=>{
-      alert()
       setremoved(res)
     })
   }
@@ -49,7 +49,8 @@ function UserTable() {
             <th>#</th>
             <th>Username</th>
             <th>mail</th>
-            <th>Action</th>
+            <th>Delete</th>
+            <th>Edit</th>
           </tr>
         </thead>
         <tbody>
@@ -68,6 +69,7 @@ function UserTable() {
                 <td>{e.name}</td>
                 <td>{e.email}</td>
                 <td><MdOutlineDeleteOutline onClick={()=>removeUser(e._id)}/></td>
+                <td><GrEdit/></td>
               </tr>
             );
           })}

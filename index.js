@@ -61,7 +61,7 @@ app.post('/admin',(req,res)=>{
 })
 
 app.delete('/deleteuser',(req,res)=>{
-  db.get().collection('users').deleteOne({_id:ObjectID(req.body.id)}).then((res)=>{
+  db.get().collection('users').deleteOne({_id:ObjectID(req.body.id)}).then((response)=>{
     res.sendStatus(200)
   })
 })

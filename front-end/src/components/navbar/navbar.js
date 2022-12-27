@@ -13,9 +13,10 @@ function Head(props) {
   return (
     <Navbar bg="light" expand="lg">
       <Container fluid>
-        <Navbar.Brand href="#">Navbar scroll</Navbar.Brand>
+        <Navbar.Brand href="#">{props.Admin?"Admin Panel":"Navbar"}</Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
+          {props.Admin?'':
           <Nav
             className="me-auto my-2 my-lg-0"
             style={{ maxHeight: "100px" }}
@@ -23,12 +24,13 @@ function Head(props) {
           >
             <Nav.Link href="#action1">Home</Nav.Link>
             <Nav.Link href="/user">Profile</Nav.Link>
-          </Nav>
-          <Form className="d-flex">
+          </Nav>}
+          <Form className="d-flex float-right">
           <Nav
             className="me-auto my-2 my-lg-0"
             style={{ maxHeight: "100px" }}
             navbarScroll
+            
           >
             <Nav.Link href="#action1">{user.name}</Nav.Link>
             <Nav.Link href="/user">Profile</Nav.Link>
