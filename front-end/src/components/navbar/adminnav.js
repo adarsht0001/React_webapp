@@ -4,16 +4,12 @@ import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../../redux/redux";
-function Head() {
+function AdminNav() {
   const navigate = useNavigate();
-  const dispatch =useDispatch()
-  const user = useSelector((state) => state.user.value);
   return (
     <Navbar bg="light" expand="lg">
       <Container fluid>
-        <Navbar.Brand href="#">Navbar</Navbar.Brand>
+        <Navbar.Brand href="#">Admin Pannel</Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
           <Nav
@@ -22,7 +18,7 @@ function Head() {
             navbarScroll
           >
             <Nav.Link href="#action1">Home</Nav.Link>
-            <Nav.Link href="/user">Profile</Nav.Link>
+            <Nav.Link href="/user">Admin</Nav.Link>
           </Nav>
           <Form className="d-flex float-right">
           <Nav
@@ -31,28 +27,15 @@ function Head() {
             navbarScroll
             
           >
-            <Nav.Link href="#">{user.name}</Nav.Link>
           </Nav>
-            {user.name ? (
               <Button
                 onClick={() => {
-                  dispatch(logout())
-                  navigate("/login")
+                  navigate("/admin");
                 }}
                 variant="outline-success"
               >
-                logout
+                Logout
               </Button>
-            ) : (
-              <Button
-                onClick={() => {
-                  navigate("/login");
-                }}
-                variant="outline-success"
-              >
-                Login
-              </Button>
-            )}
           </Form>
         </Navbar.Collapse>
       </Container>
@@ -60,4 +43,4 @@ function Head() {
   );
 }
 
-export default Head;
+export default AdminNav;

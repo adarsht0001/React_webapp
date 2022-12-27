@@ -1,11 +1,11 @@
 import React, { Fragment } from "react";
-import Head from "../../components/navbar/navbar";
+import AdminNav from "../../components/navbar/adminnav";
 import UserTable from "../../components/Table/table";
 
 const Adminpanel = () => {
   return (
     <Fragment>
-      <Head Admin/>
+      <AdminNav/>
       <UserTable />
     </Fragment>
   );
