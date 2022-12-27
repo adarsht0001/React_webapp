@@ -4,7 +4,9 @@ import Table from "react-bootstrap/Table";
 import axios from "../../axios/axios";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import { useNavigate } from "react-router-dom";
 function UserTable() {
+  const navigate=useNavigate()
   const [user, setUser] = useState([]);
   const [search,setSearch]=useState('')
   useEffect(() => {
@@ -26,6 +28,7 @@ function UserTable() {
         />
         <Button className="float-end pr-5"
           onClick={() => {
+            navigate('/adminsignup')
           }}
           variant="outline-success"
         >

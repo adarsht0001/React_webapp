@@ -12,7 +12,7 @@ import axios from "../../axios/axios";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
-function Signup() {
+function Signup(props) {
   const navigate = useNavigate();
   const {
     register,
@@ -21,7 +21,7 @@ function Signup() {
   } = useForm();
   const submitForm = (data) => {
     axios.post("/signup", data).then(() => {
-      navigate('/login')
+      props.Admin?navigate('/adminpanel'):navigate('/login')
     });
   };
   return (
@@ -35,7 +35,7 @@ function Signup() {
             >
               <MDBCardBody className="p-5 d-flex flex-column align-items-center mx-auto w-100">
                 <h2 className="fw-bold mb-2 text-uppercase">Signup</h2>
-                <p className="text-white-50 mb-5">Create an Account</p>
+                <p className="text-white-50 mb-5">{props.Admin?"Add a user":"Create an Account"}</p>
 
                 {errors.name && <p>Fisrtname {errors.name.type}</p>}
                 <MDBInput

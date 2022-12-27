@@ -48,6 +48,7 @@ app.post('/signup',async(req,res)=>{
 app.post('/admin',(req,res)=>{
     const {email,password} =req.body;
     if(email==admin.email&&password==admin.pass){
+    let accessToken=jwt.sign(admin.email,process.env.ACESS_TOKEN_SCERET)
         res.status(200).json({login:"sucess"})
     }else{
         if(email!==admin.email){

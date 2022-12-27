@@ -6,6 +6,7 @@ import SignupPage from "./pages/user/signup";
 import ProfilePage from "./pages/user/userprofile";
 import AdminLogin from "./pages/admin/adminlogin";
 import Adminpanel from "./pages/admin/adminpanel";
+import Adminsignup from "./pages/admin/adminsignup";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { persistStore } from "redux-persist";
@@ -14,6 +15,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 // Bootstrap Bundle JS
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import { store } from "./redux/redux";
+import Checklogin from "./loginauth/loginauth";
 
 let persistor =persistStore(store)
 
@@ -29,6 +31,7 @@ function App() {
           <Route path="/user" element={<ProfilePage />} />
           <Route path="/admin" element={<AdminLogin />} />
           <Route path="/adminpanel" element={<Adminpanel />} />
+          <Route path="/adminsignup" element={<Adminsignup />} />
         </Routes>
         </PersistGate>
       </Provider>
