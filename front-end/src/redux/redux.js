@@ -10,18 +10,22 @@ const persistConfig={
 
 
 
-const intialValue={value:{name:"",email:"",jwt:""}}       
+const intialValue={value:{name:null,email:null,jwt:""}}     
+  
 const userSlice=createSlice({
     name:"user",
     initialState:intialValue,
     reducers:{
         login:(state,action)=>{
             state.value=action.payload        
+        },
+        logout:(state,action)=>{
+            state.value=intialValue
         }
     }
 })
 
-export const {login} =userSlice.actions
+export const {login,logout} =userSlice.actions
 
 const reducer=combineReducers({
     user:userSlice.reducer  
