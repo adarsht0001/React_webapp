@@ -69,7 +69,7 @@ function UserTable() {
                 <td>{e.name}</td>
                 <td>{e.email}</td>
                 <td><MdOutlineDeleteOutline onClick={()=>removeUser(e._id)}/></td>
-                <td><GrEdit/></td>
+                <td><GrEdit onClick={()=>{}}/></td>
               </tr>
             );
           })}

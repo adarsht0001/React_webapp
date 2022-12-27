@@ -32,8 +32,7 @@ function Head(props) {
             navbarScroll
             
           >
-            <Nav.Link href="#action1">{user.name}</Nav.Link>
-            <Nav.Link href="/user">Profile</Nav.Link>
+            <Nav.Link href="#">{user.name}</Nav.Link>
           </Nav>
             {user.name ? (
               <Button
