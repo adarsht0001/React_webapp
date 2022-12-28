@@ -7,4 +7,11 @@ function Checklogin() {
   )
 }
 
-export default Checklogin;
+function  IsLogged(){
+  const user=useSelector((state)=>state.user.value)
+  return(
+    user.name?<Navigate to='/' />:<Outlet/>
+  )
+}
+
+export {Checklogin,IsLogged}
