@@ -6,7 +6,7 @@ import { useState } from "react";
 import axios from "../../axios/axios";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { login } from "../../redux/redux";
+import { adminlogin, login } from "../../redux/redux";
 
 function Login(props) {
     const [error,setError]=useState(null)
@@ -20,6 +20,7 @@ function Login(props) {
         password
       }
     axios.post('/admin',data).then((res)=>{
+      dispatch(adminlogin({email}))
       navigate('/adminpanel')
         alert('login Succesfull')
     }).catch((err)=>{

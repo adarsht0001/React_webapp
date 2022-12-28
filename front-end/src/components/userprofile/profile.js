@@ -10,33 +10,22 @@ import {
 import axios from "../../axios/axios";
 import FormData from 'form-data'
 export default function Profile() {
-  const navigate = useNavigate();
-  const [img,setImg]=useState("");
+  const navigate = useNavigate()
+  const [img,setImg]=useState("")
+  
   const uploadimg=(e)=>{
     e.preventDefault()
     const data=new FormData()
-    data.append("filename",img)
+    data.append("file",img)
     console.log(data);
-    console.log(img);
-    const formData = new FormData()
-    formData.append("filename", img);
-    formData.append("filename", 1);
-    formData.append("destination", "images");
-    formData.append("create_thumbnail", true);
-    console.log(formData)
-    const config = {
-      headers: {
-        "content-type": "multipart/form-data"
-      }
-    };
-    try {
-    
-      axios.post('/upload',img,config).then(()=>{
+    console.log(img)
+      axios.post('/upload',img,{ headers: {
+        "Content-Type": "multipart/form-data"
+      }})
+      .then(()=>{
   
       }).catch((err)=>console.log(err))
-    } catch (error) {
-      console.log(error);
-    }
+ 
   }
   useEffect(() => {
     axios

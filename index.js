@@ -2,12 +2,14 @@ const express = require("express");
 const app = express()
 const db = require("./Mongodb")
 const bcrypt =require('bcrypt')
+const multer = require("multer")
+
 require('dotenv').config()
 
 app.use(express.json())
 const cors = require('cors')
 var jwt = require('jsonwebtoken');
-const { ObjectId, ObjectID } = require("mongodb");
+const { ObjectID } = require("mongodb");
 app.use(cors())
 
 const admin={email:'Admin',pass:'123'}
@@ -19,6 +21,17 @@ db.connect((err) => {
     console.log("db connected");
   }
 });
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "uploads/");
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname);
+  },
+});
+
+const upload = multer({ storage: storage });
 
 app.get("/user",authenticateToken,(req, res) => {
     res.status(200)

@@ -10,7 +10,8 @@ const persistConfig={
 
 
 
-const intialValue={value:{name:null,email:null,jwt:""}}     
+const intialValue={value:{name:null,email:null,jwt:""}}   
+const initialAdmin={value:{email:null,edit:{}}}  
   
 const userSlice=createSlice({
     name:"user",
@@ -25,10 +26,29 @@ const userSlice=createSlice({
     }
 })
 
+const adminSlice=createSlice({
+    name:"admin",
+    initialState:initialAdmin,
+    reducers:{
+        adminlogin:(state,action)=>{
+            state.value=action.payload
+        },
+        adminlogout:(state,action)=>{
+            state.value=initialAdmin
+        },
+        adminsetedit:(state,action)=>{
+            state.value=action.payload
+        }
+    }
+})
+
+
 export const {login,logout} =userSlice.actions
+export const {adminlogin,adminlogout,adminsetedit}=adminSlice.actions
 
 const reducer=combineReducers({
-    user:userSlice.reducer  
+    user:userSlice.reducer  ,
+    admin:adminSlice.reducer
 })
 const persistedReducer=persistReducer(persistConfig,reducer) 
 
