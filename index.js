@@ -71,6 +71,12 @@ app.get('/userlist',async(req,res)=>{
   res.json({result:users})
 })
 
+app.post('/upload',(req,res)=>{
+  console.log(req)
+  console.log(req.body)
+  console.log(req.file)
+  console.log(req.files)
+})
 
 function authenticateToken(req,res,next){
   const authHeader=req.headers['authorization']

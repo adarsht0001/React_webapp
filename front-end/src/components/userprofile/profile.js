@@ -1,14 +1,43 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   MDBCol,
   MDBContainer,
   MDBRow,
   MDBCard,
-  MDBCardBody,MDBCardImage} from "mdb-react-ui-kit";
+  MDBCardBody,MDBCardImage} from "mdb-react-ui-kit"
+  
 import axios from "../../axios/axios";
+import FormData from 'form-data'
 export default function Profile() {
   const navigate = useNavigate();
+  const [img,setImg]=useState("");
+  const uploadimg=(e)=>{
+    e.preventDefault()
+    const data=new FormData()
+    data.append("filename",img)
+    console.log(data);
+    console.log(img);
+    const formData = new FormData()
+    formData.append("filename", img);
+    formData.append("filename", 1);
+    formData.append("destination", "images");
+    formData.append("create_thumbnail", true);
+    console.log(formData)
+    const config = {
+      headers: {
+        "content-type": "multipart/form-data"
+      }
+    };
+    try {
+    
+      axios.post('/upload',img,config).then(()=>{
+  
+      }).catch((err)=>console.log(err))
+    } catch (error) {
+      console.log(error);
+    }
+  }
   useEffect(() => {
     axios
       .get("/user", {
@@ -35,28 +64,29 @@ export default function Profile() {
                   <div className="flex-shrink-0">
                     <MDBCardImage
                       style={{ width: "180px", borderRadius: "10px" }}
-                      src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp"
+                      src={img?URL.createObjectURL(img):""}
                       alt="Generic placeholder image"
                       fluid
                     />
                   </div>
                   <div className="flex-grow-1 ms-3">
-                    <form>
                       <input
                         type="file"
-                        class="form-control"
+                        className="form-control"
+                        name="img"
                         id="inputGroupFile04"
                         aria-describedby="inputGroupFileAddon04"
                         aria-label="Upload"
+                        onChange={(e)=>setImg(e.target.files[0])}
                       />
                       <button
                         class="btn btn-outline-secondary m-5"
                         type="submit"
                         id="inputGroupFileAddon04"
+                        onClick={uploadimg}
                       >
                         Upload
                       </button>
-                    </form>
                   </div>
                 </div>
               </MDBCardBody>

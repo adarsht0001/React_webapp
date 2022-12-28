@@ -25,10 +25,12 @@ function App() {
       <Provider store={store}>
         <PersistGate persistor={persistor}>
         <Routes>
+          <Route element={<Checklogin/>}>
           <Route path="/" element={<Homepage />} />
+          <Route path="/user" element={<ProfilePage />} />
+          </Route>
           <Route path="/login" element={<Loginpage />} />
           <Route path="/signup" element={<SignupPage />} />
-          <Route path="/user" element={<ProfilePage />} />
           <Route path="/admin" element={<AdminLogin />} />
           <Route path="/adminpanel" element={<Adminpanel />} />
           <Route path="/adminsignup" element={<Adminsignup />} />
