@@ -3,9 +3,12 @@ import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { adminlogout } from "../../redux/redux";
 function AdminNav() {
   const navigate = useNavigate();
+  const dispatch =useDispatch();
   return (
     <Navbar bg="light" expand="lg">
       <Container fluid>
@@ -30,7 +33,8 @@ function AdminNav() {
           </Nav>
               <Button
                 onClick={() => {
-                  navigate("/admin");
+                  dispatch(adminlogout())
+                  navigate("/admin")
                 }}
                 variant="outline-success"
               >

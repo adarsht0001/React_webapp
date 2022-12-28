@@ -15,7 +15,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 // Bootstrap Bundle JS
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import { store } from "./redux/redux";
-import {Checklogin,IsLogged} from "./loginauth/loginauth";
+import {Adminloged, Checklogin,Checkloginadmin,IsLogged} from "./loginauth/loginauth";
 
 let persistor =persistStore(store)
 
@@ -33,9 +33,13 @@ function App() {
           <Route path="/login" element={<Loginpage />} />
           <Route path="/signup" element={<SignupPage />} />
           </Route>
+          <Route element={<Checkloginadmin/>}>
           <Route path="/admin" element={<AdminLogin />} />
+          </Route>
+          <Route element={<Adminloged/>}>
           <Route path="/adminpanel" element={<Adminpanel />} />
           <Route path="/adminsignup" element={<Adminsignup />} />
+          </Route>
         </Routes>
         </PersistGate>
       </Provider>
