@@ -91,6 +91,17 @@ app.post('/upload',(req,res)=>{
   console.log(req.files)
 })
 
+app.put('/edituser',(req,res)=>{
+  db.get().collection('users').updateOne({_id:ObjectID(req.body.id)},{
+    $set:{
+      name:req.body.name,
+      email:req.body.email
+    }
+  }).then(()=>{
+    res.sendStatus(200)
+  })
+})
+
 function authenticateToken(req,res,next){
   const authHeader=req.headers['authorization']
   const token=authHeader && authHeader.split(' ')[0]

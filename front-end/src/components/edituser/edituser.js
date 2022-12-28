@@ -11,14 +11,17 @@ import {
 import axios from "../../axios/axios";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom"
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { removeedit } from '../../redux/redux';
 function Edituser() {
     const navigate = useNavigate()
-    const {register,handleSubmit,formState: { errors },setValue} = useForm()
+    const dispatch =useDispatch()
+    const {register,handleSubmit,formState: { errors }} = useForm()
     const submitForm = (data) => {
-      axios.post("/edituser", data).then(() => {
-       
-      });
+      axios.put("/edituser", data).then(() => {
+        dispatch(removeedit())
+       navigate('/adminpanel')
+      })
     };
     const admin=useSelector((state)=>state.admin.value)
   return (
@@ -57,6 +60,17 @@ function Edituser() {
                   pattern:
                     /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
                 })}
+              />
+              <MDBInput
+                wrapperClass="mb-4 mx-5 w-100"
+                labelClass="text-white"
+                id="formControlLg"
+                defaultValue={admin.edit._id}
+                size="lg"
+                {...register("id", {
+                  required: true
+                })}
+                hidden
               />
               <Button
                 variant="primary"
