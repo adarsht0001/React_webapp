@@ -17,7 +17,7 @@ function Signup(props) {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors }
   } = useForm();
   const submitForm = (data) => {
     axios.post("/signup", data).then(() => {
