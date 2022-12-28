@@ -7,6 +7,8 @@ import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom";
 import {MdOutlineDeleteOutline} from 'react-icons/md';
 import {GrEdit} from 'react-icons/gr'
+import { useDispatch } from "react-redux";
+import { adminsetedit } from "../../redux/redux";
 function UserTable() {
   const navigate=useNavigate()
   const [remove,setremoved]=useState('')
@@ -15,6 +17,7 @@ function UserTable() {
       setremoved(res)
     })
   }
+  const dipatch=useDispatch();
   const [user, setUser] = useState([]);
   const [search,setSearch]=useState('')
   useEffect(() => {
@@ -69,7 +72,10 @@ function UserTable() {
                 <td>{e.name}</td>
                 <td>{e.email}</td>
                 <td><MdOutlineDeleteOutline onClick={()=>removeUser(e._id)}/></td>
-                <td><GrEdit onClick={()=>{}}/></td>
+                <td><GrEdit onClick={()=>{
+                  dipatch(adminsetedit(e))
+                  navigate('/adminedituser')
+                }}/></td>
               </tr>
             );
           })}

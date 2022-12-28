@@ -11,7 +11,6 @@ import {
 import axios from "../../axios/axios";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom"
-import { useForm } from "react-hook-form"
 function Edituser() {
     const navigate = useNavigate()
     const {

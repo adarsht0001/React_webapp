@@ -37,14 +37,17 @@ const adminSlice=createSlice({
             state.value=initialAdmin
         },
         adminsetedit:(state,action)=>{
-            state.value=action.payload
+            state.value.edit=action.payload
+        },
+        removeedit:(state,action)=>{
+            state.value.edit=initialAdmin.value.edit
         }
     }
 })
 
 
 export const {login,logout} =userSlice.actions
-export const {adminlogin,adminlogout,adminsetedit}=adminSlice.actions
+export const {adminlogin,adminlogout,adminsetedit,removeedit}=adminSlice.actions
 
 const reducer=combineReducers({
     user:userSlice.reducer  ,
