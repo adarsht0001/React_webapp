@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Button from "react-bootstrap/Button";
 import {
   MDBContainer,
@@ -11,17 +11,16 @@ import {
 import axios from "../../axios/axios";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom"
+import { useSelector } from 'react-redux';
 function Edituser() {
     const navigate = useNavigate()
-    const {
-      register,
-      handleSubmit,
-      formState: { errors }} = useForm()
+    const {register,handleSubmit,formState: { errors },setValue} = useForm()
     const submitForm = (data) => {
       axios.post("/edituser", data).then(() => {
        
       });
     };
+    const admin=useSelector((state)=>state.admin.value)
   return (
     <form onSubmit={handleSubmit(submitForm)}>
     <MDBContainer fluid>
@@ -32,9 +31,7 @@ function Edituser() {
             style={{ borderRadius: "1rem", maxWidth: "400px" }}
           >
             <MDBCardBody className="p-5 d-flex flex-column align-items-center mx-auto w-100">
-              <h2 className="fw-bold mb-2 text-uppercase">Signup</h2>
-              <p className="text-white-50 mb-5">Edit User</p>
-
+              <h2 className="fw-bold mb-2 text-uppercase">Edit User</h2>
               {errors.name && <p>Fisrtname {errors.name.type}</p>}
               <MDBInput
                 wrapperClass="mb-4 mx-5 w-100"
@@ -42,6 +39,7 @@ function Edituser() {
                 label="Name"
                 id="formControlLg"
                 type="text"
+                defaultValue={admin.edit.name}
                 size="lg"
                 {...register("name", { required: true, minLength: 4 })}
               />
@@ -52,6 +50,7 @@ function Edituser() {
                 label="Email address"
                 id="formControlLg"
                 type="email"
+                defaultValue={admin.edit.email}
                 size="lg"
                 {...register("email", {
                   required: true,
@@ -63,7 +62,7 @@ function Edituser() {
                 variant="primary"
                 type="submit"
               >
-                Signup
+              Edit
               </Button>
             </MDBCardBody>
           </MDBCard>
