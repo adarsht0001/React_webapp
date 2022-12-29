@@ -19,7 +19,9 @@ function Login(props) {
         email,
         password
       }
-    axios.post('/admin',data).then((res)=>{
+    axios.post('/admin',data).then((response)=>{
+      localStorage.setItem('access_token', response.data.accessToken)
+      localStorage.setItem('refresh_token',response.data.refreshToken)
       dispatch(adminlogin({email}))
       navigate('/adminpanel')
         alert('login Succesfull')
@@ -33,7 +35,7 @@ function Login(props) {
         password
       }
       axios.post('/login',data).then((response)=>{
-        sessionStorage.setItem('jwt', response.data.accessToken)
+        localStorage.setItem('access_token', response.data.accessToken)
         localStorage.setItem('refresh_token',response.data.refreshToken)
         dispatch(login({id:response.data.user._id,name:response.data.user.name,email:response.data.user.email,jwt:response.data.accessToken}))
         navigate('/')

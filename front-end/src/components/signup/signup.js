@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import {
   MDBContainer,
@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 function Signup(props) {
+  const [error,setError]=useState(null)
   const navigate = useNavigate();
   const {
     register,
@@ -22,7 +23,9 @@ function Signup(props) {
   const submitForm = (data) => {
     axios.post("/signup", data).then(() => {
       props.Admin?navigate('/adminpanel'):navigate('/login')
-    });
+    }).catch((err)=>{
+      setError(err.response.data.error)
+    })
   };
   return (
     <form onSubmit={handleSubmit(submitForm)}>
@@ -36,6 +39,10 @@ function Signup(props) {
               <MDBCardBody className="p-5 d-flex flex-column align-items-center mx-auto w-100">
                 <h2 className="fw-bold mb-2 text-uppercase">Signup</h2>
                 <p className="text-white-50 mb-5">{props.Admin?"Add a user":"Create an Account"}</p>
+              {error&&<p className="fw-bold">
+                {error}
+              </p>}
+
 
                 {errors.name && <p>Fisrtname {errors.name.type}</p>}
                 <MDBInput

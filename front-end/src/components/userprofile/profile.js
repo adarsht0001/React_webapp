@@ -40,14 +40,9 @@ export default function Profile() {
   useEffect(() => {
     setImg(localStorage.getItem(`${id}`));
     axios
-      .get("/user/"+id, {
-        headers: {
-          Authorization: localStorage.getItem("access_token"),
-        },
-      })
+      .get("/user/"+id)
       .then((response) => {
         setUserImg(response.data.img)
-
       })
       .catch((err) => {
         navigate("/")

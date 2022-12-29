@@ -34,6 +34,8 @@ function AdminNav() {
               <Button
                 onClick={() => {
                   dispatch(adminlogout())
+                  localStorage.removeItem("access_token")
+                  localStorage.removeItem('refresh_token')
                   navigate("/admin")
                 }}
                 variant="outline-success"

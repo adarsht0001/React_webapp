@@ -24,7 +24,7 @@ db.connect((err) => {
 })
 
 function createAccessToken(user) {
-  return jwt.sign(user,process.env.ACESS_TOKEN_SCERET, { expiresIn: '15m' });
+  return jwt.sign(user,process.env.ACESS_TOKEN_SCERET, { expiresIn: '10m' });
 }
 
 function authenticateToken(req,res,next){
@@ -71,6 +71,10 @@ app.post('/refresh-token',(req,res)=>{
 
 
 app.post('/signup',async(req,res)=>{
+  let user=await db.get().collection('users').findOne({email:req.body.email})
+  if(user){
+    res.status(401).json({error:'email already exist'})
+  }
   req.body.password= await bcrypt.hash(req.body.password, 10)
   db.get().collection('users').insertOne(req.body).then(()=>{
     res.status(200).json()
@@ -80,8 +84,9 @@ app.post('/signup',async(req,res)=>{
 app.post('/admin',(req,res)=>{
     const {email,password} =req.body;
     if(email==admin.email&&password==admin.pass){
-    let accessToken=jwt.sign(admin.email,process.env.ACESS_TOKEN_SCERET)
-        res.status(200).json({login:"sucess"})
+    let accessToken=jwt.sign({email},process.env.ACESS_TOKEN_SCERET,{expiresIn: '10m'})
+    let refreshToken=jwt.sign(email,process.env.REFRESH_TOKEN_SECRET)
+    res.json({accessToken:accessToken,refreshToken:refreshToken})
     }else{
         if(email!==admin.email){
             res.status(401).json({error:'Invalid Email'})
@@ -97,7 +102,7 @@ app.delete('/deleteuser',(req,res)=>{
   })
 })
 
-app.get('/userlist',async(req,res)=>{
+app.get('/userlist',authenticateToken,async(req,res)=>{
   let users=await db.get().collection('users').find().toArray()
   res.json({result:users})
 })
@@ -114,7 +119,7 @@ app.post('/upload/:id',upload.single('image'),(req,res)=>{
  }
 })
 
-app.put('/edituser',(req,res)=>{
+app.put('/edituser',authenticateToken,(req,res)=>{
   db.get().collection('users').updateOne({_id:ObjectID(req.body.id)},{
     $set:{
       name:req.body.name,

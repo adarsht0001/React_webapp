@@ -29,30 +29,20 @@ function Head() {
             className="me-auto my-2 my-lg-0"
             style={{ maxHeight: "100px" }}
             navbarScroll
-            
           >
             <Nav.Link href="#">{user.name}</Nav.Link>
           </Nav>
-            {user.name ? (
               <Button
                 onClick={() => {
                   dispatch(logout())
+                  localStorage.removeItem("access_token")
+                  localStorage.removeItem('refresh_token')
                   navigate("/login")
                 }}
                 variant="outline-success"
               >
                 logout
-              </Button>
-            ) : (
-              <Button
-                onClick={() => {
-                  navigate("/login");
-                }}
-                variant="outline-success"
-              >
-                Login
-              </Button>
-            )}
+              </Button>           
           </Form>
         </Navbar.Collapse>
       </Container>
