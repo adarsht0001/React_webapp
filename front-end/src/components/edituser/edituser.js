@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useState } from 'react'
 import Button from "react-bootstrap/Button";
 import {MDBContainer,MDBRow,MDBCol,MDBCard,MDBCardBody,MDBInput} from "mdb-react-ui-kit";
 import axios from "../../axios/axios";
@@ -7,13 +7,19 @@ import { useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from 'react-redux';
 import { removeedit } from '../../redux/redux';
 function Edituser() {
+    const [emailerr,setError]=useState(null)
     const navigate = useNavigate()
     const dispatch =useDispatch()
     const {register,handleSubmit,formState: { errors }} = useForm()
-    const submitForm = (data) => {
+
+    const submitForm = (data,e) => {
+      e.preventDefault()
       axios.put("/edituser", data).then(() => {
         dispatch(removeedit())
        navigate('/adminpanel')
+      }).catch((err)=>{
+        console.log(err)
+        setError(err.response.data.error)
       })
     };
     const admin=useSelector((state)=>state.admin.value)
@@ -27,6 +33,9 @@ function Edituser() {
             style={{ borderRadius: "1rem", maxWidth: "400px" }}
           >
             <MDBCardBody className="p-5 d-flex flex-column align-items-center mx-auto w-100">
+             {emailerr&&<p className="fw-bold">
+                {emailerr}
+              </p>}
               <h2 className="fw-bold mb-2 text-uppercase">Edit User</h2>
               {errors.name && <p>Fisrtname {errors.name.type}</p>}
               <MDBInput

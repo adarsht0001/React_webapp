@@ -24,7 +24,7 @@ db.connect((err) => {
 })
 
 function createAccessToken(user) {
-  return jwt.sign(user,process.env.ACESS_TOKEN_SCERET, { expiresIn: '10m' });
+  return jwt.sign({logen:'jjdfkfs'},process.env.ACESS_TOKEN_SCERET, { expiresIn: '10m' });
 }
 
 function authenticateToken(req,res,next){
@@ -119,15 +119,23 @@ app.post('/upload/:id',upload.single('image'),(req,res)=>{
  }
 })
 
-app.put('/edituser',authenticateToken,(req,res)=>{
-  db.get().collection('users').updateOne({_id:ObjectID(req.body.id)},{
-    $set:{
-      name:req.body.name,
-      email:req.body.email
-    }
-  }).then(()=>{
-    res.sendStatus(200)
-  })
+app.put('/edituser',authenticateToken,async(req,res)=>{
+  let user= await db.get().collection('users').findOne({email:req.body.email})
+  if(user){
+    res.status(400).json({error:'email already exist'})
+  }
+  else{
+    console.log(user);
+    db.get().collection('users').updateOne({_id:ObjectID(req.body.id)},{
+      $set:{
+        name:req.body.name,
+        email:req.body.email
+      }
+    }).then((res)=>{
+      console.log(res);
+      res.json({})
+    })
+  }
 })
 
 app.listen(3001, (err) => {

@@ -6,7 +6,8 @@ const instance=axios.create({
     "Content-Type": "application/json"
     }
 })
-
+const accessToken = localStorage.getItem('access_token');
+instance.defaults.headers.Authorization=`Bearer ${accessToken}`
 instance.interceptors.request.use(
     config => {
       // Get the access JWT from local storage
