@@ -42,7 +42,7 @@ export default function Profile() {
     axios
       .get("/user/"+id, {
         headers: {
-          Authorization: sessionStorage.getItem("jwt"),
+          Authorization: localStorage.getItem("access_token"),
         },
       })
       .then((response) => {
