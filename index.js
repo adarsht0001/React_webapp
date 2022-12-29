@@ -6,14 +6,14 @@ const upload =require('./multer')
 const cors = require('cors')
 const { ObjectID } = require("mongodb")
 const jwt = require('jsonwebtoken');
-app.use(express.static('img'))
+
+const admin={email:'Admin',pass:'123'}
 
 require('dotenv').config()
 
+app.use(express.static('img'))
 app.use(express.json())
 app.use(cors())
-
-const admin={email:'Admin',pass:'123'}
 
 db.connect((err) => {
   if (err) {
@@ -21,12 +21,22 @@ db.connect((err) => {
   } else {
     console.log("db connected");
   }
-});
+})
 
+function authenticateToken(req,res,next){
+  const authHeader=req.headers['authorization']
+  const token=authHeader && authHeader.split(' ')[0]
+  if(token==null) return res.sendStatus(401)
+  jwt.verify(token,process.env.ACESS_TOKEN_SCERET,(err,user)=>{
+    if(err) return res.sendStatus(403)
+    next()
+  })
+}
 
-
-app.get("/user",(req, res) => {
-    res.status(200)
+app.get("/user/:id",authenticateToken,(req, res) => {
+  db.get().collection('users').findOne({_id:ObjectID(req.params.id)}).then((response)=>{
+    res.json(response)
+  })
 });
 
 app.post('/login',async(req,res)=>{
@@ -34,8 +44,11 @@ app.post('/login',async(req,res)=>{
   if(user){
     bcrypt.compare(req.body.password,user.password).then((status)=>{
       if(status) {
-        let accessToken=jwt.sign(user.name,process.env.ACESS_TOKEN_SCERET,{expiresIn:'6h'})
-        res.status(200).json({accessToken:accessToken,user:user})
+        let accessToken=jwt.sign({user},process.env.ACESS_TOKEN_SCERET,{expiresIn: '10m'})
+        let refreshToken=jwt.sign(user,process.env.REFRESH_TOKEN_SECRET)
+        res.cookie('jwt', refreshToken, { httpOnly: true,secure: true, 
+          maxAge: 24 * 60 * 60 * 1000 });
+        res.json({accessToken:accessToken,user:user,refreshToken:refreshToken})
       }
       else res.status(401).json({error:'Invalid password'})
     })
@@ -98,17 +111,6 @@ app.put('/edituser',(req,res)=>{
     res.sendStatus(200)
   })
 })
-
-function authenticateToken(req,res,next){
-  const authHeader=req.headers['authorization']
-  const token=authHeader && authHeader.split(' ')[0]
-  if(token==null) return res.sendStatus(401)
-  jwt.verify(token,process.env.ACESS_TOKEN_SCERET,(err,user)=>{
-    if(err) return res.sendStatus(403)
-    next()
-  })
-}
-
 
 app.listen(3001, (err) => {
   if (err) {
