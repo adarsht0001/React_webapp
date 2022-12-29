@@ -34,7 +34,7 @@ function Login(props) {
       }
       axios.post('/login',data).then((response)=>{
         sessionStorage.setItem('jwt', response.data.accessToken)
-        dispatch(login({name:response.data.user.name,email:response.data.user.email,jwt:response.data.accessToken}))
+        dispatch(login({id:response.data.user._id,name:response.data.user.name,email:response.data.user.email,jwt:response.data.accessToken}))
         navigate('/')
       }).catch((err)=>setError(err.response.data.error))
     }

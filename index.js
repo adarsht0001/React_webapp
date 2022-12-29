@@ -2,14 +2,14 @@ const express = require("express");
 const app = express()
 const db = require("./Mongodb")
 const bcrypt =require('bcrypt')
-const multer = require("multer")
+const upload =require('./multer')
+const cors = require('cors')
+const { ObjectID } = require("mongodb")
+const jwt = require('jsonwebtoken');
 
 require('dotenv').config()
 
 app.use(express.json())
-const cors = require('cors')
-var jwt = require('jsonwebtoken');
-const { ObjectID } = require("mongodb");
 app.use(cors())
 
 const admin={email:'Admin',pass:'123'}
@@ -22,16 +22,7 @@ db.connect((err) => {
   }
 });
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "uploads/");
-  },
-  filename: function (req, file, cb) {
-    cb(null, file.originalname);
-  },
-});
 
-const upload = multer({ storage: storage });
 
 app.get("/user",authenticateToken,(req, res) => {
     res.status(200)
@@ -84,11 +75,8 @@ app.get('/userlist',async(req,res)=>{
   res.json({result:users})
 })
 
-app.post('/upload',(req,res)=>{
-  console.log(req)
-  console.log(req.body)
-  console.log(req.file)
-  console.log(req.files)
+app.post('/upload/:id',upload.single('image'),(req,res)=>{
+  res.json({})
 })
 
 app.put('/edituser',(req,res)=>{

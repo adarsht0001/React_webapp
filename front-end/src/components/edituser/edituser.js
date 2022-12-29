@@ -1,13 +1,6 @@
 import React, { useEffect } from 'react'
 import Button from "react-bootstrap/Button";
-import {
-  MDBContainer,
-  MDBRow,
-  MDBCol,
-  MDBCard,
-  MDBCardBody,
-  MDBInput,
-} from "mdb-react-ui-kit";
+import {MDBContainer,MDBRow,MDBCol,MDBCard,MDBCardBody,MDBInput} from "mdb-react-ui-kit";
 import axios from "../../axios/axios";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom"

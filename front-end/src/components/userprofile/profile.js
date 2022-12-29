@@ -9,21 +9,21 @@ import {
   
 import axios from "../../axios/axios";
 import FormData from 'form-data'
+import { useSelector } from "react-redux";
+
 export default function Profile() {
   const navigate = useNavigate()
   const [img,setImg]=useState("")
-  
+  const id = useSelector((state) => state.user.value.id);
   const uploadimg=(e)=>{
     e.preventDefault()
     const data=new FormData()
-    data.append("file",img)
-    console.log(data);
-    console.log(img)
-      axios.post('/upload',img,{ headers: {
+    data.append("image",img)
+      axios.post('/upload/'+id,data,{ headers: {
         "Content-Type": "multipart/form-data"
       }})
-      .then(()=>{
-  
+      .then((response)=>{
+        console.log(response);
       }).catch((err)=>console.log(err))
  
   }
@@ -38,10 +38,11 @@ export default function Profile() {
         alert();
       })
       .catch((err) => {
-        navigate("/");
+        navigate('/')
         console.log(err);
       });
-  }, []);
+    }, []);
+
   return (
     <div className="vh-100" style={{ backgroundColor: "#9de2ff" }}>
       <MDBContainer>
@@ -59,6 +60,7 @@ export default function Profile() {
                     />
                   </div>
                   <div className="flex-grow-1 ms-3">
+                    <form onSubmit={(e)=>uploadimg(e)}>
                       <input
                         type="file"
                         className="form-control"
@@ -72,10 +74,10 @@ export default function Profile() {
                         class="btn btn-outline-secondary m-5"
                         type="submit"
                         id="inputGroupFileAddon04"
-                        onClick={uploadimg}
                       >
                         Upload
                       </button>
+                    </form>
                   </div>
                 </div>
               </MDBCardBody>
