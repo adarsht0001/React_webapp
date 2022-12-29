@@ -21,7 +21,7 @@ function AdminNav() {
             navbarScroll
           >
             <Nav.Link href="#action1">Home</Nav.Link>
-            <Nav.Link href="/user">Admin</Nav.Link>
+            <Nav.Link href="#">Admin</Nav.Link>
           </Nav>
           <Form className="d-flex float-right">
           <Nav
