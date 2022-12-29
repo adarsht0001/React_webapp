@@ -5,43 +5,50 @@ import {
   MDBContainer,
   MDBRow,
   MDBCard,
-  MDBCardBody,MDBCardImage} from "mdb-react-ui-kit"
-  
+  MDBCardBody,
+  MDBCardImage,
+} from "mdb-react-ui-kit";
+
 import axios from "../../axios/axios";
-import FormData from 'form-data'
+import FormData from "form-data";
 import { useSelector } from "react-redux";
 
 export default function Profile() {
-  const navigate = useNavigate()
-  const [img,setImg]=useState("")
+  const navigate = useNavigate();
+  const [img, setImg] = useState("");
   const id = useSelector((state) => state.user.value.id);
-  const uploadimg=(e)=>{
-    e.preventDefault()
-    const data=new FormData()
-    data.append("image",img)
-      axios.post('/upload/'+id,data,{ headers: {
-        "Content-Type": "multipart/form-data"
-      }})
-      .then((response)=>{
-        console.log(response);
-      }).catch((err)=>console.log(err))
- 
-  }
-  useEffect(() => {
+  const uploadimg = (e) => {
+    e.preventDefault();
+    const data = new FormData();
+    data.append("image", img);
     axios
-      .get("/user", {
+      .post("/upload/" + id, data, {
         headers: {
-          Authorization: sessionStorage.getItem("jwt"),
+          "Content-Type": "multipart/form-data",
         },
       })
-      .then(() => {
-        alert();
+      .then((response) => {
+        localStorage.setItem(`${id}`, response.data);
+        setImg(response.data);
       })
-      .catch((err) => {
-        navigate('/')
-        console.log(err);
-      });
-    }, []);
+      .catch((err) => console.log(err));
+  };
+  useEffect(() => {
+    setImg(localStorage.getItem(`${id}`));
+    // axios
+    //   .get("/user", {
+    //     headers: {
+    //       Authorization: sessionStorage.getItem("jwt"),
+    //     },
+    //   })
+    //   .then(() => {
+    //     alert();
+    //   })
+    //   .catch((err) => {
+    //     navigate("/");
+    //     console.log(err);
+    //   });
+  }, []);
 
   return (
     <div className="vh-100" style={{ backgroundColor: "#9de2ff" }}>
@@ -54,13 +61,13 @@ export default function Profile() {
                   <div className="flex-shrink-0">
                     <MDBCardImage
                       style={{ width: "180px", borderRadius: "10px" }}
-                      src={img?URL.createObjectURL(img):""}
+                      src={img}
                       alt="Generic placeholder image"
                       fluid
                     />
                   </div>
                   <div className="flex-grow-1 ms-3">
-                    <form onSubmit={(e)=>uploadimg(e)}>
+                    <form onSubmit={(e) => uploadimg(e)}>
                       <input
                         type="file"
                         className="form-control"
@@ -68,10 +75,10 @@ export default function Profile() {
                         id="inputGroupFile04"
                         aria-describedby="inputGroupFileAddon04"
                         aria-label="Upload"
-                        onChange={(e)=>setImg(e.target.files[0])}
+                        onChange={(e) => setImg(e.target.files[0])}
                       />
                       <button
-                        class="btn btn-outline-secondary m-5"
+                        className="btn btn-outline-secondary m-5"
                         type="submit"
                         id="inputGroupFileAddon04"
                       >

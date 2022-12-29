@@ -6,6 +6,7 @@ const upload =require('./multer')
 const cors = require('cors')
 const { ObjectID } = require("mongodb")
 const jwt = require('jsonwebtoken');
+app.use(express.static('img'))
 
 require('dotenv').config()
 
@@ -24,7 +25,7 @@ db.connect((err) => {
 
 
 
-app.get("/user",authenticateToken,(req, res) => {
+app.get("/user",(req, res) => {
     res.status(200)
 });
 
@@ -33,7 +34,7 @@ app.post('/login',async(req,res)=>{
   if(user){
     bcrypt.compare(req.body.password,user.password).then((status)=>{
       if(status) {
-        let accessToken=jwt.sign(user.name,process.env.ACESS_TOKEN_SCERET)
+        let accessToken=jwt.sign(user.name,process.env.ACESS_TOKEN_SCERET,{expiresIn:'6h'})
         res.status(200).json({accessToken:accessToken,user:user})
       }
       else res.status(401).json({error:'Invalid password'})
@@ -76,7 +77,15 @@ app.get('/userlist',async(req,res)=>{
 })
 
 app.post('/upload/:id',upload.single('image'),(req,res)=>{
-  res.json({})
+  const url = req.protocol + '://' + req.get('host')
+  const Img= url + '/' + req.file.filename
+  try {
+    db.get().collection('users').updateOne({_id:ObjectID(req.params.id)},{$set:{img:Img}})
+
+      res.json(Img)
+  } catch (err) {
+    res.sendStatus(400)
+ }
 })
 
 app.put('/edituser',(req,res)=>{
@@ -99,6 +108,8 @@ function authenticateToken(req,res,next){
     next()
   })
 }
+
+
 app.listen(3001, (err) => {
   if (err) {
     console.log(err);
