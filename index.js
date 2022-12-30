@@ -24,7 +24,7 @@ db.connect((err) => {
 })
 
 function createAccessToken(user) {
-  return jwt.sign({logen:'jjdfkfs'},process.env.ACESS_TOKEN_SCERET, { expiresIn: '10m' });
+  return jwt.sign({token:'jjdfkfs'},process.env.ACESS_TOKEN_SCERET, { expiresIn: '10m' });
 }
 
 function authenticateToken(req,res,next){

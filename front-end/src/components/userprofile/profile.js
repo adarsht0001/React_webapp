@@ -87,7 +87,7 @@ export default function Profile() {
                         type="submit"
                         id="inputGroupFileAddon04"
                       >
-                        Upload
+                        Update
                       </button>
                       
                     </form>

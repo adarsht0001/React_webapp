@@ -18,7 +18,7 @@ import { store } from "./redux/redux";
 import {Adminloged, Checklogin,Checkloginadmin,IsLogged} from "./loginauth/loginauth";
 import EdituserPage from "./pages/admin/edituser";
 
-let persistor =persistStore(store)
+const persistor =persistStore(store)
 
 function App() {
   return (
