@@ -12,7 +12,7 @@ const persistConfig={
 
 const intialValue={value:{id:null,name:null,email:null,access_token:"",refresh_token:""}}   
 const initialAdmin={value:{email:null,edit:{},access_token:"",refresh_token:""}}  
-const token={value:{access_token:null,refresh_token:null}}
+const tokens={value:{access_token:null,refresh_token:null}}
 
 const userSlice=createSlice({
     name:"user",
@@ -29,13 +29,16 @@ const userSlice=createSlice({
 
 const tokenSlice=createSlice({
     name:"tokens",
-    initialState:token,
+    initialState:tokens,
     reducer:{
         setAccess:(state,action)=>{
             state.value.access_token=action.payload
         },
         setrefresh:(state,action)=>{
             state.value.refresh_token=action.payload
+        },
+        removetokens:(state,action)=>{
+            state.value=tokens
         }
     }
 })
