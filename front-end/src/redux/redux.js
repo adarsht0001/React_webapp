@@ -12,7 +12,7 @@ const persistConfig={
 
 const intialValue={value:{id:null,name:null,email:null,access_token:"",refresh_token:""}}   
 const initialAdmin={value:{email:null,edit:{},access_token:"",refresh_token:""}}  
-const tokens={value:{access_token:'',refresh_token:''}}
+const tokens={value:{access_token:null,refresh_token:null}}
 
 const userSlice=createSlice({
     name:"user",
