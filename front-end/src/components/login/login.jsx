@@ -23,6 +23,8 @@ function Login(props) {
       localStorage.setItem('access_token', response.data.accessToken)
       localStorage.setItem('refresh_token',response.data.refreshToken)
       dispatch(adminlogin({email}))
+      dispatch(setAccess({access_token:response.data.accessToken}))
+      dispatch(setrefresh({refresh_token:response.data.refreshToken}))
       navigate('/adminpanel')
         alert('login Succesfull')
     }).catch((err)=>{
