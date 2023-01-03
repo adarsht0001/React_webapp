@@ -12,7 +12,7 @@ const persistConfig={
 
 const intialValue={value:{id:null,name:null,email:null,access_token:"",refresh_token:""}}   
 const initialAdmin={value:{email:null,edit:{},access_token:"",refresh_token:""}}  
-const tokens={value:{access_token:null,refresh_token:null}}
+const tokens={value:{access_token:'',refresh_token:''}}
 
 const userSlice=createSlice({
     name:"user",
@@ -28,9 +28,9 @@ const userSlice=createSlice({
 })
 
 const tokenSlice=createSlice({
-    name:"tokens",
+    name:"token",
     initialState:tokens,
-    reducer:{
+    reducers:{
         setAccess:(state,action)=>{
             state.value.access_token=action.payload
         },
@@ -70,7 +70,7 @@ export const {setAccess,setrefresh}=tokenSlice.actions
 const reducer=combineReducers({
     user:userSlice.reducer  ,
     admin:adminSlice.reducer,
-    tokens:tokenSlice.actions
+    tokens:tokenSlice.reducer
 })
 const persistedReducer=persistReducer(persistConfig,reducer) 
 

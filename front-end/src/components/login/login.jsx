@@ -6,7 +6,7 @@ import { useState } from "react";
 import axios from "../../axios/axios";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { adminlogin, login, setAccess } from "../../redux/redux";
+import { adminlogin, login, setAccess, setrefresh } from "../../redux/redux";
 
 function Login(props) {
     const [error,setError]=useState(null)
@@ -37,8 +37,9 @@ function Login(props) {
       axios.post('/login',data).then((response)=>{
         localStorage.setItem('access_token', response.data.accessToken)
         localStorage.setItem('refresh_token',response.data.refreshToken)
-        dispatch(login({id:response.data.user._id,name:response.data.user.name,email:response.data.user.email}))
+        dispatch(login({id:response.data.user._id,name:response.data.user.name,email:response.data.user.email,jwt:response.data.accessToken}))
         dispatch(setAccess({access_token:response.data.accessToken}))
+        dispatch(setrefresh({refresh_token:response.data.refreshToken}))
         navigate('/')
       }).catch((err)=>setError(err.response.data.error))
     }
