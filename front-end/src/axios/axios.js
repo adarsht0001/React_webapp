@@ -27,15 +27,13 @@ instance.interceptors.request.use(
   
   // Add a response interceptor
   instance.interceptors.response.use(
-      response => response,
-      error => {
-          // If the error is a 401 (unauthorized), try to refresh the access JWT
+    response => response,
+    error => {
+      // If the error is a 401 (unauthorized), try to refresh the access JWT
       if (error.response.status === 401) {
         // Get the refresh JWT from local storage
-        const tokens=useSelector((state)=>state.token.value)
 
-        const refreshToken = tokens.refresh_token;
-        // const refreshToken = localStorage.getItem('refresh_token');
+        const refreshToken = localStorage.getItem('refresh_token');
   
         // If the refresh JWT is set, send a refresh token request
         if (refreshToken) {

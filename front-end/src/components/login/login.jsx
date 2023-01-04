@@ -24,7 +24,6 @@ function Login(props) {
       localStorage.setItem('refresh_token',response.data.refreshToken)
       dispatch(adminlogin({email}))
       dispatch(setAccess({access_token:response.data.accessToken}))
-      dispatch(setrefresh({refresh_token:response.data.refreshToken}))
       navigate('/adminpanel')
         alert('login Succesfull')
     }).catch((err)=>{
@@ -41,7 +40,6 @@ function Login(props) {
         localStorage.setItem('refresh_token',response.data.refreshToken)
         dispatch(login({id:response.data.user._id,name:response.data.user.name,email:response.data.user.email,jwt:response.data.accessToken}))
         dispatch(setAccess({access_token:response.data.accessToken}))
-        dispatch(setrefresh({refresh_token:response.data.refreshToken}))
         navigate('/')
       }).catch((err)=>setError(err.response.data.error))
     }

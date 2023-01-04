@@ -32,7 +32,7 @@ function authenticateToken(req,res,next){
   const token=authHeader && authHeader.split(' ')[1]
   if(token==null) return res.sendStatus(401)
   jwt.verify(token,process.env.ACESS_TOKEN_SCERET,(err,user)=>{
-    if(err) return res.sendStatus(403)
+    if(err) return res.sendStatus(401)
     next()
   })
 }
@@ -48,7 +48,7 @@ app.post('/login',async(req,res)=>{
   if(user){
     bcrypt.compare(req.body.password,user.password).then((status)=>{
       if(status) {
-        let accessToken=jwt.sign({user},process.env.ACESS_TOKEN_SCERET,{expiresIn: '10m'})
+        let accessToken=jwt.sign({user},process.env.ACESS_TOKEN_SCERET,{expiresIn: '10s'})
         let refreshToken=jwt.sign(user,process.env.REFRESH_TOKEN_SECRET)
         res.json({accessToken:accessToken,user:user,refreshToken:refreshToken})
       }
@@ -60,6 +60,7 @@ app.post('/login',async(req,res)=>{
 })
 
 app.post('/refresh-token',(req,res)=>{
+  console.log('here');
   const refreshToken = req.body.refresh_token;
   if (refreshToken == null) return res.sendStatus(401)
   jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
