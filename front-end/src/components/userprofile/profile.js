@@ -16,7 +16,7 @@ import { useSelector } from "react-redux";
 export default function Profile() {
   const [img, setImg] = useState("")
   const [userImg,setUserImg]=useState('')
-  const id = useSelector((state) => state.user.value.id);
+  const id = useSelector((state) => state.user.value.id)
   const fileinput=useRef(null)
   const uploadimg = (e) => {
     e.preventDefault();

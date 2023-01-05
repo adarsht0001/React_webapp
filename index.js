@@ -134,7 +134,7 @@ app.put('/edituser',authenticateToken,async(req,res)=>{
       }
     }).then((res)=>{
       console.log(res);
-      res.json({})
+      res.status(200)
     })
   }
 })
