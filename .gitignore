@@ -149,7 +149,7 @@ dist
 **/*.back.*
 
 node_modules
-/img
+
 
 *.sublime*
 
